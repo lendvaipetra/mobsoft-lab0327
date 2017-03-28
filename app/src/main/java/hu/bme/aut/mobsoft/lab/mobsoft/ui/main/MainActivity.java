@@ -2,7 +2,6 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -35,17 +34,13 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     }
 
     @Override
-    public void showMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void login() {
+    public void navigateToRecipes() {
 
     }
 
     @Override
-    public void continueWithoutLogin() {
+    public void showError() {
 
     }
+
 }

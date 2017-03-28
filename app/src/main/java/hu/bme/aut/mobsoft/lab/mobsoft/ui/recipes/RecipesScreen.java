@@ -5,7 +5,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes;
  */
 
 public interface RecipesScreen {
-    void addNewRecipe();
-    void deleteRecipe();
-    void viewRecipe();
+    void showRecipes();
+    void navigateToNewRecipe();
+    void navigateToDetailedRecipe();
 }

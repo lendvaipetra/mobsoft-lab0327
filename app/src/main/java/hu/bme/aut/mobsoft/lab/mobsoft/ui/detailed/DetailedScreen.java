@@ -5,5 +5,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.detailed;
  */
 
 public interface DetailedScreen {
-    void modifyRecipe();
+    void navigateToModifyRecipe();
+    void navigateToRecipes();
+    void showRecipe();
 }

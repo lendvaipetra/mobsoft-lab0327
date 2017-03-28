@@ -5,5 +5,5 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.newrecipe;
  */
 
 public interface NewRecipeScreen {
-    void save();
+    void navigateToRecipes();
 }

@@ -4,8 +4,6 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
 public class MainPresenter extends Presenter<MainScreen> {
 
-    private static MainPresenter instance = null;
-
     public MainPresenter() {
     }
 
@@ -17,5 +15,14 @@ public class MainPresenter extends Presenter<MainScreen> {
     @Override
     public void detachScreen() {
         super.detachScreen();
+    }
+
+
+    public void login() {
+
+    }
+
+    public void continueWithoutLogin() {
+
     }
 }

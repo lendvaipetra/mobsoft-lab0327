@@ -1,8 +1,20 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.newrecipe;
 
-/**
- * Created by mobsoft on 2017. 03. 27..
- */
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
-public class NewRecipePresenter {
+public class NewRecipePresenter extends Presenter<NewRecipeScreen> {
+
+    public NewRecipePresenter(){}
+
+    @Override
+    public void attachScreen(NewRecipeScreen screen) {
+        super.attachScreen(screen);
+    }
+
+    @Override
+    public void detachScreen() {
+        super.detachScreen();
+    }
+
+    void save(){}
 }
