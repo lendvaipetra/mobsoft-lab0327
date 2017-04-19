@@ -4,10 +4,14 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
+import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.detailed.DetailedPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.main.MainPresenter;
 import android.content.Context;
 
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -51,4 +55,15 @@ public class UIModule {
     @Singleton
     public RecipesPresenter provideRecipesPresenter() { return new RecipesPresenter(); }
 
+    @Provides
+    @Singleton
+    public EventBus provideEventBus() {
+        return EventBus.getDefault();
+    }
+
+    @Provides
+    @Singleton
+    public Executor provideExecutor() {
+        return Executors.newFixedThreadPool(1);
+    }
 }
