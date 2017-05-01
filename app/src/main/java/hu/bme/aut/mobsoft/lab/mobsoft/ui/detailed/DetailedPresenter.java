@@ -3,12 +3,14 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.detailed;
 import android.util.Log;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.RecipesInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.GetRecipeEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.RemoveRecipeEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
@@ -42,11 +44,11 @@ public class DetailedPresenter extends Presenter<DetailedScreen> {
 
     void showRecipe(){}
 
-    public void getRecipes() {
+    public void getRecipe(final int id) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                recipesInteractor.getRecipes();
+                recipesInteractor.getRecipe(id);
             }
         });
     }
@@ -57,12 +59,30 @@ public class DetailedPresenter extends Presenter<DetailedScreen> {
             if (screen != null) {
                 //screen.showMessage("error");
             }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
+            Log.e("Networking", "Error reading recipe", event.getThrowable());
         } else {
             if (screen != null) {
-                for(Recipe r : event.getRecipes()){
-                    //screen.showMessage(t.getName());;
-                }
+                screen.showRecipe(event.getRecipe());
+            }
+        }
+    }
+
+    public void removeRecipe(final int id) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                recipesInteractor.removeRecipe(id);
+            }
+        });
+    }
+
+    public void onEventMainThread(RemoveRecipeEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            Log.e("Networking", "Error removing recipe", event.getThrowable());
+        } else {
+            if (screen != null) {
+               screen.navigateToRecipes();
             }
         }
     }

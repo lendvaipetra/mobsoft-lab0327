@@ -7,9 +7,9 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.UsersInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.GetUserEvent;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.SaveUserEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.UsersInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.events.IsUserInDBEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.events.SaveUserEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.User;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
@@ -26,6 +26,8 @@ public class MainPresenter extends Presenter<MainScreen> {
     @Inject
     EventBus bus;
 
+    int id = 2;
+    User newUser = null;
 
     public MainPresenter() {
     }
@@ -44,47 +46,21 @@ public class MainPresenter extends Presenter<MainScreen> {
     }
 
 
-    public void login() {
-
+    public void login(String username, String password) {
+        //TODO id!
+        newUser = new User(++id, username, password);
+        isUserInDB(newUser);
     }
 
     public void continueWithoutLogin() {
-
+        if(screen!= null) screen.navigateToRecipes();
     }
 
-    public void getUsers() {
+    public void addUser(final User user) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                usersInteractor.getUsers();
-            }
-        });
-    }
-
-
-    public void onEventMainThread(GetUserEvent event) {
-        if (event.getThrowable() != null) {
-            event.getThrowable().printStackTrace();
-            if (screen != null) {
-                screen.showMessage("error");
-            }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
-        } else {
-            if (screen != null) {
-                for(User u : event.getUsers()){
-                    screen.showMessage(u.getName());;
-                }
-            }
-        }
-    }
-
-    public void addUser() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                User u = new User();
-                u.setName("addedUser");
-                usersInteractor.saveUser(u);
+                usersInteractor.saveUser(user);
             }
         });
     }
@@ -93,13 +69,38 @@ public class MainPresenter extends Presenter<MainScreen> {
         if (event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
             if (screen != null) {
-                //screen.showMessage("error");
+                screen.showMessage("error");
             }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
+            Log.e("Networking", "Error saving user", event.getThrowable());
         } else {
             if (screen != null) {
-                screen.showMessage(event.getUser().getName());;
+                continueWithoutLogin();
+            }
+        }
+    }
 
+    public void isUserInDB(final User user) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                usersInteractor.isUserInDB(user);
+            }
+        });
+    }
+
+
+    public void onEventMainThread(IsUserInDBEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            if (screen != null) {
+                screen.showMessage("error");
+            }
+            Log.e("Networking", "Error in isUserInDB", event.getThrowable());
+        } else {
+            if (screen != null) {
+                boolean isUserInDB= event.isUserInDB();
+                if(!isUserInDB) addUser(newUser);
+                else continueWithoutLogin();
             }
         }
     }

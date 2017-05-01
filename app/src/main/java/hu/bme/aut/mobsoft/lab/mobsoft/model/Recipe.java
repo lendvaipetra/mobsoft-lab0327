@@ -22,7 +22,7 @@ public class Recipe {
     public Recipe(int id, String name, List<String> ingredients, String directions, String image){
         this.id = id;
         this.name = name;
-        this.ingredients = ingredients;
+        this.ingredients = new ArrayList<>(ingredients);
         this.directions = directions;
         this.image = image;
     }
@@ -44,15 +44,11 @@ public class Recipe {
     }
 
     public List<String> getIngredients() {
-        return new ArrayList<String>(ingredients);
+        return ingredients;
     }
-
-    public void addIngredient(String ingredient) {
-        this.ingredients.add(ingredient);
-    }
-
-    public void addIngredients(List<String> ingredients) {
-        this.ingredients.addAll(ingredients);
+    //Miért kell ide a new ArrayList
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = new ArrayList<>(ingredients);
     }
 
     public String getDirections() {

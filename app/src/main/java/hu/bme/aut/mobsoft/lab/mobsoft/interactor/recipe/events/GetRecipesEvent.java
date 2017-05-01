@@ -5,24 +5,23 @@ import java.util.List;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 
 /**
- * Created by Petra on 2017. 04. 17..
+ * Created by Petra on 2017. 04. 30..
  */
 
-public class GetRecipeEvent {
+public class GetRecipesEvent {
 
-    private Recipe recipe;
+    private List<Recipe> recipes;
     private Throwable throwable;
 
-    public GetRecipeEvent() {
+    public GetRecipesEvent() {
     }
 
-
-    public Recipe getRecipe() {
-        return recipe;
+    public List<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipes(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     public Throwable getThrowable() {

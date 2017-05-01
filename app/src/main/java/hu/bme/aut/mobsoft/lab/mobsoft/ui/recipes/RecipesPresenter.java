@@ -1,7 +1,9 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes;
 
+import android.net.Uri;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import javax.inject.Inject;
 import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.RecipesInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.GetRecipeEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.GetRecipesEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.RemoveRecipeEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
@@ -41,11 +44,7 @@ public class RecipesPresenter extends Presenter<RecipesScreen> {
         super.detachScreen();
     }
 
-    public void showRecipeList() {
-
-    }
-
-    public void getRecipes() {
+    public void prepareGridViewContent() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -54,45 +53,20 @@ public class RecipesPresenter extends Presenter<RecipesScreen> {
         });
     }
 
-    public void removeRecipe() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Recipe r = new Recipe();
-                recipesInteractor.removeRecipe(r);
-            }
-        });
-    }
-
-
-    public void onEventMainThread(GetRecipeEvent event) {
+    public void onEventMainThread(GetRecipesEvent event) {
         if (event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
-            if (screen != null) {
-                //screen.showMessage("error");
-            }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
+
+            Log.e("Networking", "Error reading recipes", event.getThrowable());
         } else {
             if (screen != null) {
+                ArrayList<String> titles = new ArrayList<>();
+                ArrayList<Uri> imageUris = new ArrayList<>();
                 for (Recipe r : event.getRecipes()) {
-                    //screen.showMessage(t.getName());;
+                    titles.add(r.getName());
+                    imageUris.add(Uri.parse(r.getImage()));
                 }
-            }
-        }
-    }
-
-    public void onEventMainThread(RemoveRecipeEvent event) {
-        if (event.getThrowable() != null) {
-            event.getThrowable().printStackTrace();
-            if (screen != null) {
-                //screen.showMessage("error");
-            }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
-        } else {
-            if (screen != null) {
-
-                    //screen.showMessage(event.getRecipe().getName());;
-
+                screen.createGridView(titles, imageUris);
             }
         }
     }

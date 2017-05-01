@@ -1,6 +1,7 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.repository;
 
 import android.content.Context;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +14,22 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.User;
  */
 
 public class MemoryRepository implements Repository {
-    private static final long MINUTE = 60 * 1000;
 
     public static List<Recipe> recipes;
     public static List<User> users;
+
     @Override
     public void open(Context context) {
         List<String> ingredients = new ArrayList<String>();
         ingredients.add("ingredient one");
         ingredients.add("ingredient two");
+        ingredients.add("ingredient three");
+        ingredients.add("ingredient four");
+        ingredients.add("ingredient five");
 
-        Recipe recipe1 = new Recipe(0,"recipe one",  ingredients, "direction one", "url one");
-        Recipe recipe2 = new Recipe(1,"recipe two", ingredients, "direction two", "url two");
+        String uri = "android.resource://hu.bme.aut.mobsoft.lab.mobsoft/drawable/default_recipe";
+        Recipe recipe1 = new Recipe(0,"recipe one",  ingredients, "direction one", uri);
+        Recipe recipe2 = new Recipe(1,"recipe two", ingredients, "direction two", uri);
 
         recipes = new ArrayList<>();
         recipes.add(recipe1);
@@ -49,13 +54,18 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
+    public Recipe getRecipe(int id) {
+        return recipes.get(id);
+    }
+
+    @Override
     public void saveRecipe(Recipe recipe) {
-        recipes.add(recipe);
+        recipes.add(recipe.getId(), recipe);
     }
 
     @Override
     public void updateRecipe(Recipe recipe) {
-        for (int i=0; i<recipes.size(); i++) {
+       for (int i=0; i<recipes.size(); i++) {
             if (recipes.get(i).getId() == (recipe.getId())) {
                 recipes.set(i, recipe);
             }
@@ -63,18 +73,17 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public void removeRecipe(Recipe recipe) {
-        recipes.remove(recipe);
+    public void removeRecipe(int id) {
+        recipes.remove(id);
     }
 
     @Override
     public boolean isInDB(Recipe recipe) {
-        return recipes.contains(recipe);
-    }
-
-    @Override
-    public List<User> getUsers() {
-        return users;
+        boolean isInDB = false;
+        for (Recipe r: recipes) {
+            if(r.getId() == recipe.getId()) isInDB = true;
+        }
+        return isInDB;
     }
 
     @Override
@@ -84,6 +93,13 @@ public class MemoryRepository implements Repository {
 
     @Override
     public boolean isInDB(User user) {
-        return users.contains(user);
+        boolean isInDB = false;
+        for (User u: users) {
+            if(u.getName().equals(user.getName())){
+                isInDB = true;
+            }
+        }
+
+        return isInDB;
     }
 }

@@ -18,15 +18,15 @@ public interface Repository {
 
     List<Recipe> getRecipes();
 
+    Recipe getRecipe(int id);
+
     void saveRecipe(Recipe recipe);
 
     void updateRecipe(Recipe recipe);
 
-    void removeRecipe(Recipe recipe);
+    void removeRecipe(int id);
 
     boolean isInDB(Recipe recipe);
-
-    List<User> getUsers();
 
     void saveUser(User user);
 

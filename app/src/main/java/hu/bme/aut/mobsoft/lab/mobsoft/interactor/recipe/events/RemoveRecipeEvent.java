@@ -3,23 +3,23 @@ package hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 
 public class RemoveRecipeEvent {
-    private Recipe recipe;
+    private int recipeId;
     private Throwable throwable;
 
     public RemoveRecipeEvent() {
     }
 
-    public RemoveRecipeEvent(Recipe recipe, Throwable throwable) {
-        this.recipe = recipe;
+    public RemoveRecipeEvent(int recipeId, Throwable throwable) {
+        this.recipeId = recipeId;
         this.throwable = throwable;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
+    public int getRecipeId() {
+        return recipeId;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipeId(int id) {
+        this.recipeId = recipeId;
     }
 
     public Throwable getThrowable() {

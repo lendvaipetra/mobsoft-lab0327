@@ -1,7 +1,9 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.newrecipe;
 
+import android.net.Uri;
 import android.util.Log;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
@@ -10,6 +12,7 @@ import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.RecipesInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.GetRecipeEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.SaveRecipeEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events.UpdateRecipeEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
@@ -24,7 +27,6 @@ public class NewRecipePresenter extends Presenter<NewRecipeScreen> {
 
     @Inject
     EventBus bus;
-
     public NewRecipePresenter(){}
 
     @Override
@@ -40,24 +42,40 @@ public class NewRecipePresenter extends Presenter<NewRecipeScreen> {
         super.detachScreen();
     }
 
-    void save(){}
+    void save(boolean isAdd, int id, String recipeName, List<String> ingredients, String directions, Uri imageUri){
+        Recipe recipe = new Recipe(id, recipeName, ingredients, directions, imageUri.toString());
 
-    public void addRecipe() {
+        if(isAdd) addRecipe(recipe);
+        else modifyRecipe(recipe);
+    }
+
+    public void modifyRecipe(final Recipe recipe) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Recipe r = new Recipe();
-                recipesInteractor.saveRecipe(r);
+                recipesInteractor.updateRecipe(recipe);
             }
         });
     }
 
-    public void modifyRecipe() {
+    public void onEventMainThread(UpdateRecipeEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+
+            Log.e("Networking", "Error updating recipe", event.getThrowable());
+        } else {
+            if (screen != null) {
+                screen.showMessage(event.getRecipe().getName() + " successfully updated.");
+                screen.navigateBack();
+            }
+        }
+    }
+
+    public void addRecipe(final Recipe recipe) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Recipe r = new Recipe();
-                recipesInteractor.updateRecipe(r);
+                recipesInteractor.saveRecipe(recipe);
             }
         });
     }
@@ -65,14 +83,33 @@ public class NewRecipePresenter extends Presenter<NewRecipeScreen> {
     public void onEventMainThread(SaveRecipeEvent event) {
         if (event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
-            if (screen != null) {
-                //screen.showMessage("error");
-            }
-            Log.e("Networking", "Error reading favourites", event.getThrowable());
+
+            Log.e("Networking", "Error saving recipe", event.getThrowable());
         } else {
             if (screen != null) {
-                    //screen.showMessage(event.getRecipe().getName());;
+                screen.showMessage(event.getRecipe().getName() + " successfully saved.");
+                screen.navigateBack();
+            }
+        }
+    }
 
+    public void getRecipe(final int id) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                recipesInteractor.getRecipe(id);
+            }
+        });
+    }
+
+    public void onEventMainThread(GetRecipeEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+
+            Log.e("Networking", "Error reading recipe", event.getThrowable());
+        } else {
+            if (screen != null) {
+                screen.fillFields(event.getRecipe());
             }
         }
     }

@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events;
+package hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.events;
 
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.User;

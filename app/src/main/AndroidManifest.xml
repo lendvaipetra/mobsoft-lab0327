@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.bme.aut.mobsoft.lab.mobsoft">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".MobSoftApplication"
         android:allowBackup="true"
@@ -37,5 +38,4 @@
         <activity android:name=".ui.recipes.RecipesActivity">
         </activity>
     </application>
-
 </manifest>

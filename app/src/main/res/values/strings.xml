@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">MobSoft</string>
+    <string name="app_name">Cookbook</string>
+    <string name="removeRecipe">Remove recipe</string>
+    <string name="addRecipe">Add recipe</string>
+    <string name="recipeName">Recipe Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="directions">Directions</string>
+    <string name="welcomeText">Welcome to RecipeHandler!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="loginButtonText">Login</string>
+    <string name="continueTextViewText"> <u>Continue without login...</u></string>
+    <string name="addImageButtonText">Add Image</string>
+    <string name="addButtonText">+</string>
+    <string name="saveButtonText">Save</string>
+    <string name="defaultImageUri">android.resource://hu.bme.aut.mobsoft.lab.mobsoft/drawable/default_recipe</string>
+    <string name="modifyRecipe">Modify recipe</string>
 </resources>

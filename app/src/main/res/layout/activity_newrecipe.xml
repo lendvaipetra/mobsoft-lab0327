@@ -1,6 +1,78 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/recipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:layout_weight="0.08"
+            app:srcCompat="@drawable/default_recipe" />
+
+        <Button
+            android:id="@+id/addImageButton"
+            android:layout_width="121dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/addImageButtonText" />
+
+
+        <EditText
+            android:id="@+id/recipeNameEditText"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/recipeName" />
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/recipeIngredientsEditText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/ingredients"
+                android:layout_weight="0.95" />
+
+            <Button
+                android:id="@+id/addIngredientButton"
+                android:background="@drawable/roundedbutton_layout"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
+                android:text="@string/addButtonText" />
+        </LinearLayout>
+
+        <ListView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/recipeIngredientsListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText android:id="@+id/recipeDirectionsEditText"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/directions"/>
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_height="wrap_content"
+            android:layout_width="121dp"
+            android:layout_gravity="center"
+            android:text="@string/saveButtonText"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+</ScrollView>

@@ -1,19 +1,21 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.events;
 
-import java.util.List;
-
 import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
 
 /**
- * Created by Petra on 2017. 04. 17..
+ * Created by Petra on 2017. 04. 30..
  */
 
-public class GetRecipeEvent {
-
+public class UpdateRecipeEvent {
     private Recipe recipe;
     private Throwable throwable;
 
-    public GetRecipeEvent() {
+    public UpdateRecipeEvent() {
+    }
+
+    public UpdateRecipeEvent(Recipe recipe, Throwable throwable) {
+        this.recipe = recipe;
+        this.throwable = throwable;
     }
 
 
@@ -21,7 +23,7 @@ public class GetRecipeEvent {
         return recipe;
     }
 
-    public void setRecipes(Recipe recipe) {
+    public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 

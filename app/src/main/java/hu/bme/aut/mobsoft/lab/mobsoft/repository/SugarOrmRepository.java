@@ -27,6 +27,11 @@ public class SugarOrmRepository implements Repository{
     }
 
     @Override
+    public Recipe getRecipe(int id) {
+        return  SugarRecord.findById(Recipe.class, id);
+    }
+
+    @Override
     public void saveRecipe(Recipe recipe) {
         SugarRecord.saveInTx(recipe);
     }
@@ -43,18 +48,14 @@ public class SugarOrmRepository implements Repository{
     }
 
     @Override
-    public void removeRecipe(Recipe recipe) {
+    public void removeRecipe(int id) {
+        Recipe recipe = getRecipe(id);
         SugarRecord.deleteInTx(recipe);
     }
 
     @Override
     public boolean isInDB(Recipe recipe) {
         return SugarRecord.findById(Recipe.class, recipe.getId()) != null;
-    }
-
-    @Override
-    public List<User> getUsers() {
-        return SugarRecord.listAll(User.class);
     }
 
     @Override

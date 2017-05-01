@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.InteractorModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.RecipesInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.recipe.UsersInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.UsersInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.detailed.DetailedActivity;

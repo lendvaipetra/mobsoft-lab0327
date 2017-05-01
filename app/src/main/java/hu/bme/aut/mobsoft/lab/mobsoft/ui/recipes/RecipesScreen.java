@@ -1,5 +1,11 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes;
 
+import android.net.Uri;
+
+import java.util.ArrayList;
+
+import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
+
 /**
  * Created by mobsoft on 2017. 03. 27..
  */
@@ -7,5 +13,6 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes;
 public interface RecipesScreen {
     void showRecipes();
     void navigateToNewRecipe();
-    void navigateToDetailedRecipe();
+    void navigateToDetailedRecipe(int id);
+    void createGridView(ArrayList<String> titles, ArrayList<Uri> imageUris);
 }
