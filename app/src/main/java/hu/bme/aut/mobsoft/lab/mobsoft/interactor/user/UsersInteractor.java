@@ -7,17 +7,17 @@ import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.events.IsUserInDBEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.user.events.SaveUserEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.User;
+import hu.bme.aut.mobsoft.lab.mobsoft.network.recipe.RecipeApi;
+import hu.bme.aut.mobsoft.lab.mobsoft.network.user.UserApi;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
-
-/**
- * Created by Petra on 2017. 04. 17..
- */
 
 public class UsersInteractor {
     @Inject
     Repository repository;
     @Inject
     EventBus bus;
+    @Inject
+    UserApi userApi;
 
     public UsersInteractor() {
         MobSoftApplication.injector.inject(this);
@@ -27,6 +27,7 @@ public class UsersInteractor {
         SaveUserEvent event = new SaveUserEvent();
         event.setUser(user);
         try {
+            //userApi.loginPost(user).execute();
             repository.saveUser(user);
             bus.post(event);
         } catch (Exception e) {

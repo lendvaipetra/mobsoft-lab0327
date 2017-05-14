@@ -11,7 +11,6 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.Recipe;
  */
 
 public interface RecipesScreen {
-    void showRecipes();
     void navigateToNewRecipe();
     void navigateToDetailedRecipe(int id);
     void createGridView(ArrayList<String> titles, ArrayList<Uri> imageUris);

@@ -1,5 +1,6 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.orm.dsl.Table;
 
 import java.util.ArrayList;
@@ -7,8 +8,14 @@ import java.util.List;
 
 @Table
 public class User {
+
+    @SerializedName("id")
     private int id = -1;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("password")
     private String password;
 
     public User(){}

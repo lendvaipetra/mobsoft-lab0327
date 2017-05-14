@@ -104,8 +104,6 @@ public class RecipesActivity extends AppCompatActivity implements RecipesScreen 
         super.onStop();
         recipesPresenter.detachScreen();
     }
-    @Override
-    public void showRecipes(){}
 
     @Override
     public void createGridView(ArrayList<String> titles, ArrayList<Uri> imageUris) {

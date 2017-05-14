@@ -1,5 +1,6 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.orm.dsl.Table;
 
 import java.util.ArrayList;
@@ -11,10 +12,19 @@ import java.util.List;
 @Table
 public class Recipe {
 
+    @SerializedName("id")
     private int id = -1;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("ingredients")
     private List<String> ingredients = new ArrayList<String>();
+
+    @SerializedName("directions")
     private String directions;
+
+    @SerializedName("image")
     private String image;
 
     public Recipe(){}

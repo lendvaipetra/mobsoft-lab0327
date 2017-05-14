@@ -47,7 +47,6 @@ public class MainPresenter extends Presenter<MainScreen> {
 
 
     public void login(String username, String password) {
-        //TODO id!
         newUser = new User(++id, username, password);
         isUserInDB(newUser);
     }
