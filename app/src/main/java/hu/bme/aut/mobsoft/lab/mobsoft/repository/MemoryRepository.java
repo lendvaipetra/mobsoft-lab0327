@@ -81,7 +81,7 @@ public class MemoryRepository implements Repository {
     public void removeRecipe(int id) {
         for (int i=0; i<recipes.size(); i++) {
             if (recipes.get(i).getId() == id) {
-                recipes.set(i, null);
+                recipes.remove(i);
             }
         }
     }
