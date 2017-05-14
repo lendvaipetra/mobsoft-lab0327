@@ -10,10 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.BuildConfig;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.main.MainScreen;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes.RecipesPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes.RecipesScreen;
 import hu.bme.aut.mobsoft.lab.mobsoft.utils.RobolectricDaggerTestRunner;
@@ -26,7 +24,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(RobolectricDaggerTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-public class RecipeTest {
+public class RecipesTest {
 
     private RecipesPresenter recipesPresenter;
 
@@ -38,7 +36,7 @@ public class RecipeTest {
 
     //Set working directory in run configuration! ../app
     @Test
-    public void testGetRecipes() {
+    public void test() {
         RecipesScreen recipesScreen = mock(RecipesScreen.class);
         recipesPresenter.attachScreen(recipesScreen);
         recipesPresenter.prepareGridViewContent();

@@ -31,7 +31,7 @@ public class MemoryRepository implements Repository {
         Recipe recipe1 = new Recipe(0,"recipe one",  ingredients, "direction one", uri);
         Recipe recipe2 = new Recipe(1,"recipe two", ingredients, "direction two", uri);
 
-        recipes = new ArrayList<>();
+        recipes = new ArrayList<>(100);
         recipes.add(recipe1);
         recipes.add(recipe2);
 
@@ -55,12 +55,17 @@ public class MemoryRepository implements Repository {
 
     @Override
     public Recipe getRecipe(int id) {
-        return recipes.get(id);
+        for (int i=0; i<recipes.size(); i++) {
+            if (recipes.get(i).getId() == id) {
+                return  recipes.get(i);
+            }
+        }
+        return null;
     }
 
     @Override
     public void saveRecipe(Recipe recipe) {
-        recipes.add(recipe.getId(), recipe);
+        recipes.add(recipe);
     }
 
     @Override
@@ -74,7 +79,11 @@ public class MemoryRepository implements Repository {
 
     @Override
     public void removeRecipe(int id) {
-        recipes.remove(id);
+        for (int i=0; i<recipes.size(); i++) {
+            if (recipes.get(i).getId() == id) {
+                recipes.set(i, null);
+            }
+        }
     }
 
     @Override

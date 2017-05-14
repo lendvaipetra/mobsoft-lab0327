@@ -23,7 +23,7 @@ public class MockInterceptor implements Interceptor{
 
         Uri uri = Uri.parse(request.url().toString());
 
-        Log.d("Test Http Client", "URL call: " + uri.toString());
+        Log.d("Test Http Client", "URL call: " + uri.toString() + " Method: " + request.method());
         Headers headers = request.headers();
 
 

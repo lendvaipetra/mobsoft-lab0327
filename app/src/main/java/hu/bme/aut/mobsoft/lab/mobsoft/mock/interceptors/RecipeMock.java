@@ -14,6 +14,12 @@ import static hu.bme.aut.mobsoft.lab.mobsoft.mock.interceptors.MockHelper.bodyTo
 import static hu.bme.aut.mobsoft.lab.mobsoft.mock.interceptors.MockHelper.makeResponse;
 
 public class RecipeMock {
+
+    public static MemoryRepository memoryRepository= new MemoryRepository();
+
+    RecipeMock(){
+        memoryRepository.open(null);
+    }
     public static Response process(Request request) {
         Uri uri = Uri.parse(request.url().toString());
 
@@ -23,14 +29,10 @@ public class RecipeMock {
 
 
         if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "recipe") && request.method().equals("GET")) {
-            MemoryRepository memoryRepository = new MemoryRepository();
-            memoryRepository.open(null);
+
             responseString = GsonHelper.getGson().toJson(memoryRepository.getRecipes());
             responseCode = 200;
         }else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "recipe") && request.method().equals("GET")) {
-            MemoryRepository memoryRepository = new MemoryRepository();
-            memoryRepository.open(null);
-
             int id = Integer.parseInt(uri.getLastPathSegment());
 
             Recipe recipe =  memoryRepository.getRecipe(id);
@@ -46,8 +48,7 @@ public class RecipeMock {
         }else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "recipe") && request.method().equals("POST")) {
             String recipeString = bodyToString(request);
             Recipe recipe = GsonHelper.getGson().fromJson(recipeString, Recipe.class);
-            MemoryRepository memoryRepository = new MemoryRepository();
-            memoryRepository.open(null);
+
             try{
                 memoryRepository.saveRecipe(recipe);
                 responseCode = 201;
@@ -60,8 +61,7 @@ public class RecipeMock {
         }else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "recipe") && request.method().equals("PUT")) {
             String recipeString = bodyToString(request);
             Recipe recipe = GsonHelper.getGson().fromJson(recipeString, Recipe.class);
-            MemoryRepository memoryRepository = new MemoryRepository();
-            memoryRepository.open(null);
+
             try{
                 memoryRepository.updateRecipe(recipe);
                 responseCode = 200;
@@ -72,8 +72,6 @@ public class RecipeMock {
             }
 
         }else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "recipe") && request.method().equals("DELETE")) {
-            MemoryRepository memoryRepository = new MemoryRepository();
-            memoryRepository.open(null);
 
             int id = Integer.parseInt(uri.getLastPathSegment());
 

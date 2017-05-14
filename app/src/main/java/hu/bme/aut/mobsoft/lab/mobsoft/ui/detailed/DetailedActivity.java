@@ -103,6 +103,8 @@ public class DetailedActivity extends AppCompatActivity implements DetailedScree
 
     @Override
     public void showRecipe(Recipe recipe){
+        if(recipe == null) return;
+
         TextView recipeNameTextView  = (TextView)findViewById(R.id.recipeNameTextView);
         ListView ingredientsListView  = (ListView)findViewById(R.id.recipeIngredientsListView);
         TextView directionsTextView  = (TextView)findViewById(R.id.recipeDetailsContentTextView);

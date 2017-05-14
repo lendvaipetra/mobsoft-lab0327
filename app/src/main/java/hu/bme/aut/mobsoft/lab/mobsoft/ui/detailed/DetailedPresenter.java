@@ -42,8 +42,6 @@ public class DetailedPresenter extends Presenter<DetailedScreen> {
         super.detachScreen();
     }
 
-    void showRecipe(){}
-
     public void getRecipe(final int id) {
         executor.execute(new Runnable() {
             @Override

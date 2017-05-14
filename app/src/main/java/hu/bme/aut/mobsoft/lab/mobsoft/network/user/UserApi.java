@@ -15,7 +15,7 @@ public interface UserApi {
      */
 
     @POST("login")
-    Call<Integer> loginPost(
+    Call<Void> loginPost(
             @Body User userdata
     );
 

@@ -15,13 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
-import hu.bme.aut.mobsoft.lab.mobsoft.model.User;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.recipes.RecipesActivity;
 
 public class MainActivity extends AppCompatActivity implements MainScreen {
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     MainPresenter mainPresenter;
 
     boolean login = false;
-    int WRITE_EXTERNAL_STORAGE = 0;
+    int REQUEST_CODE = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,19 +67,21 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     //forrás: http://stackoverflow.com/questions/32599132/securityexception-permission-denial-reading-only-on-emulator
     private void checkPermission(){
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+        int writeStoragePermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int internetPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        if (writeStoragePermissionCheck != PackageManager.PERMISSION_GRANTED ||
+                internetPermissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                    this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE);
+                    this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.INTERNET}, REQUEST_CODE);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (!(requestCode == WRITE_EXTERNAL_STORAGE && (grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED))) {
-            showMessage("You cannot use the app without permission.");
+        if (!(requestCode == REQUEST_CODE && (grantResults.length > 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        && (grantResults[1] == PackageManager.PERMISSION_GRANTED))) {
+            showMessage("You cannot use the app without granting permissions.");
             finish();
         }
     }
