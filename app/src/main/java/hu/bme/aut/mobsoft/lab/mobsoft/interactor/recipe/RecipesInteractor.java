@@ -28,7 +28,7 @@ public class RecipesInteractor {
     public void getRecipe(int id) {
         GetRecipeEvent event = new GetRecipeEvent();
         try {
-            //recipeApi.recipeIdGet(id).execute();
+            recipeApi.recipeIdGet(id).execute();
             Recipe recipe = repository.getRecipe(id);
             event.setRecipes(recipe);
             bus.post(event);
@@ -41,7 +41,7 @@ public class RecipesInteractor {
     public void getRecipes() {
         GetRecipesEvent event = new GetRecipesEvent();
         try {
-            //recipeApi.recipeGet().execute();
+            recipeApi.recipeGet().execute();
             List<Recipe> recipes = repository.getRecipes();
             event.setRecipes(recipes);
             bus.post(event);
@@ -56,7 +56,7 @@ public class RecipesInteractor {
         SaveRecipeEvent event = new SaveRecipeEvent();
         event.setRecipe(recipe);
         try {
-            //recipeApi.recipePost(recipe).execute();
+            recipeApi.recipePost(recipe).execute();
             repository.saveRecipe(recipe);
             bus.post(event);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class RecipesInteractor {
         UpdateRecipeEvent event = new UpdateRecipeEvent();
         event.setRecipe(recipe);
         try {
-            //recipeApi.recipePut(recipe).execute();
+            recipeApi.recipePut(recipe).execute();
             repository.updateRecipe(recipe);
             bus.post(event);
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class RecipesInteractor {
         RemoveRecipeEvent event = new RemoveRecipeEvent();
         event.setRecipeId(id);
         try {
-            //recipeApi.recipeIdDelete(id).execute();
+            recipeApi.recipeIdDelete(id).execute();
             repository.removeRecipe(id);
             bus.post(event);
         } catch (Exception e) {

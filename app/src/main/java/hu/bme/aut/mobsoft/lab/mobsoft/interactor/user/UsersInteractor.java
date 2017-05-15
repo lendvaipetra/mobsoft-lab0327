@@ -27,7 +27,7 @@ public class UsersInteractor {
         SaveUserEvent event = new SaveUserEvent();
         event.setUser(user);
         try {
-            //userApi.loginPost(user).execute();
+            userApi.loginPost(user).execute();
             repository.saveUser(user);
             bus.post(event);
         } catch (Exception e) {

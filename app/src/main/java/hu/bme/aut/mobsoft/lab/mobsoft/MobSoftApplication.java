@@ -6,12 +6,17 @@ import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
+import io.fabric.sdk.android.Fabric;
 public class MobSoftApplication extends Application {
 
     @Inject
     Repository repository;
 
+    private Tracker mTracker;
     public static MobSoftApplicationComponent injector;
 
     public void setInjector(MobSoftApplicationComponent appComponent) {
@@ -23,7 +28,7 @@ public class MobSoftApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Fabric.with(this, new Crashlytics());
         injector =
                 DaggerMobSoftApplicationComponent.builder().
                         uIModule(
@@ -32,5 +37,18 @@ public class MobSoftApplication extends Application {
 
         injector.inject(this);
         repository.open(getApplicationContext());
+    }
+
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return mTracker;
     }
 }

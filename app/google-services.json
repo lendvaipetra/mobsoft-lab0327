@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "423183629789",
+    "project_id": "mobsoft-lab0327"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423183629789:android:4d381474dcc41e4f",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.mobsoft.lab.mobsoft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1vu3tbf5kl7C2YtQuS9M1woSQ55bP704"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-99154470-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

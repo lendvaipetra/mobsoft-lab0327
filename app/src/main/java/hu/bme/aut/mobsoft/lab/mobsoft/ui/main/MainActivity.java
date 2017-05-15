@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     @Inject
     MainPresenter mainPresenter;
+
+    private Tracker mTracker;
 
     boolean login = false;
     int REQUEST_CODE = 0;
@@ -45,6 +50,11 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
                 String username =userNameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 mainPresenter.login(username, password);
+
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Login")
+                        .setAction("Share")
+                        .build());
             }
         });
 
@@ -56,15 +66,25 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
                 mainPresenter.continueWithoutLogin();
             }
         });
+
+        // Obtain the shared Tracker instance.
+        MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mainPresenter.attachScreen(this);
+        mTracker.setScreenName("Image~MainActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         checkPermission();
+
     }
 
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
     //forrás: http://stackoverflow.com/questions/32599132/securityexception-permission-denial-reading-only-on-emulator
     private void checkPermission(){
         int writeStoragePermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
